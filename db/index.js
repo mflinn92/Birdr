@@ -22,8 +22,5 @@ const sightingSchema = new mongoose.Schema({
 });
 
 const sightingDetails = mongoose.model('sightings', sightingSchema);
-sightingDetails.create({location: 'massachusetts'})
-  .then((res) => {
-    console.log(res);
-  });
+
 module.exports = sightingDetails;
