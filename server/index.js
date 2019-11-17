@@ -63,7 +63,8 @@ app.post('/sightings', upload.single('sightingPhoto'), async (req, res) => {
     contentType
   }
   try {
-    await db.addSighting(sighting);
+    let response = await db.addSighting(sighting);
+    console.log(response);
     res.send('sighting saved!');
   } catch(err) {
     console.log(err);

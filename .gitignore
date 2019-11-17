@@ -28,6 +28,8 @@ dist/
 node_modules/
 bower_components/
 
+server/uploads
+
 # Floobits
 .floo
 .floobit
