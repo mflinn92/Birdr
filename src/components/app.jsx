@@ -5,11 +5,14 @@ import axios from 'axios';
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.imageRef = React.createRef();
     this.state = {
-      file: null
+      file: null,
+      recentSightings: [],
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.imgAnalyze = this.imgAnalyze.bind(this);
   }
 
   onFormSubmit(event) {
@@ -35,6 +38,17 @@ class App extends React.Component {
     });
   }
 
+  imgAnalyze() {
+    const { current } = this.imageRef;
+    mobilenet.load()
+      .then((model) => {
+        model.classify(current);
+      })
+      .then((prediction) => {
+        console.log(prediction);
+      });
+  }
+
   render() {
     return (
       <div>
@@ -45,7 +59,10 @@ class App extends React.Component {
             <button type="submit">Upload</button>
           </label>
         </form>
-        <img src='http://localhost:1234/sightings/5dd08f378974a4581a79cca6' />
+        <img src='http://localhost:1234/sightings/5dd08f378974a4581a79cca6' width="450px" height="375px" className="analyze" ref={this.imageRef}/>
+        <div>
+          <button onClick={this.imgAnalyze}>Analyze</button>
+        </div>
       </div>
     )
   }
