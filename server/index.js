@@ -32,7 +32,7 @@ app.get('/sightings', async (req, res) => {
     res.status(404).send(err);
   }
 });
-
+//Used to retrieve the image from a particular sighting
 app.get('/sightings/:id', async (req, res) => {
   const { id } = req.params;
   try {

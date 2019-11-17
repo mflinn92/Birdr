@@ -63,13 +63,23 @@ class App extends React.Component {
           <label>
             Photo Upload
             <input type="file" name="sightingPhoto" onChange={this.onChange} />
-            <button type="submit">Upload</button>
+
           </label>
+          <div className="imagePreview">
+            {this.state.imagePreview && (
+            <img crossOrigin="anonymous"
+              src={this.state.imagePreview}
+              width="450px" height="375px"
+              className="analyze"
+              ref={this.imageRef}
+            />
+            )}
+          </div>
+          <div>
+            <button onClick={this.imgAnalyze}>Analyze</button>
+            <button type="submit">Upload</button>
+          </div>
         </form>
-        <img crossOrigin="anonymous" src={this.state.imagePreview} width="450px" height="375px" className="analyze" ref={this.imageRef} />
-        <div>
-          <button onClick={this.imgAnalyze}>Analyze</button>
-        </div>
       </div>
     )
   }
