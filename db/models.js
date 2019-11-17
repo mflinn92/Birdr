@@ -5,9 +5,9 @@ class sightingModel {
     this.model = sightingDetails;
   }
 
-  async getMostRecentSightings() {
+  async getMostRecentSightingsData() {
     try {
-      return await this.model.find().sort('-date').limit(15);
+      return await this.model.find({}, '-img').sort('-date').limit(15);
     }
     catch(err) {
       console.log(err);
@@ -19,6 +19,15 @@ class sightingModel {
     try {
        await this.model.create(sighting);
     } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  async getSightingImage(id) {
+    try {
+      return await this.model.findById(id, 'img');
+    } catch(err) {
       console.log(err);
       throw err;
     }

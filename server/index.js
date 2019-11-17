@@ -1,5 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
+// const Promise = require('bluebird');
+const fs = require('fs')
 const multer = require('multer');
 const upload = multer({dest: './uploads'})
 const db = require('../db/models.js');
@@ -17,7 +19,7 @@ app.use(express.static('./dist'));
 //gets 15 most recent sightings
 app.get('/sightings', async (req, res) => {
   try {
-    const sightings = await db.getMostRecentSightings();
+    const sightings = await db.getMostRecentSightingsData();
     res.json(sightings);
   } catch (err) {
     console.log(err);
@@ -25,9 +27,35 @@ app.get('/sightings', async (req, res) => {
   }
 });
 
+app.get('/sightings/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { img, contentType } = await db.getSightingImage(id);
+    res.contentType = contentType
+    res.send(img.data);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send(err);
+  }
+});
 app.post('/sightings', upload.single('sightingPhoto'), async (req, res) => {
-  console.log(req.file);
-  const { sighting } = req.body;
+  const { file } = req;
+  let imgData = fs.readFileSync(file.path,);
+  imgData = imgData.toString('base64');
+  let imgBuffer = new Buffer(imgData, 'base64');
+  let contentType = file.mimetype;
+  // const { sighting } = req.body;
+  let sighting = {
+		userFirstName: "Mike",
+		userLastName: "Flinn",
+		location: "Boston",
+		species: "Bald Eagle",
+		userID: 45
+	};
+  sighting.img = {
+    data: imgBuffer,
+    contentType
+  }
   try {
     await db.addSighting(sighting);
     res.send('sighting saved!');
