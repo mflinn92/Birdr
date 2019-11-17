@@ -9,6 +9,7 @@ class App extends React.Component {
     this.state = {
       file: null,
       recentSightings: [],
+      modelPredictions: [],
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -42,11 +43,14 @@ class App extends React.Component {
     const { current } = this.imageRef;
     mobilenet.load()
       .then((model) => {
-        model.classify(current);
+        return model.classify(current);
       })
       .then((prediction) => {
-        console.log(prediction);
-      });
+        this.setState({modelPredictions: prediction});
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   render() {
@@ -59,7 +63,7 @@ class App extends React.Component {
             <button type="submit">Upload</button>
           </label>
         </form>
-        <img src='http://localhost:1234/sightings/5dd08f378974a4581a79cca6' width="450px" height="375px" className="analyze" ref={this.imageRef}/>
+        <img crossOrigin="anonymous" src='http://localhost:1234/sightings/5dd08f378974a4581a79cca6' width="450px" height="375px" className="analyze" ref={this.imageRef} />
         <div>
           <button onClick={this.imgAnalyze}>Analyze</button>
         </div>
