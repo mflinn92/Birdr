@@ -17,7 +17,7 @@ class sightingModel {
 
   async addSighting(sighting) {
     try {
-       await this.model.create(sighting);
+      return await this.model.create(sighting);
     } catch (err) {
       console.log(err);
       throw err;

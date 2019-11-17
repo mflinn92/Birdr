@@ -8,8 +8,10 @@ class App extends React.Component {
     this.imageRef = React.createRef();
     this.state = {
       file: null,
+      imagePreview: null,
       recentSightings: [],
       modelPredictions: [],
+      analysisImgId:'',
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -35,7 +37,8 @@ class App extends React.Component {
 
   onChange(event) {
     this.setState({
-      file: event.target.files[0]
+      file: event.target.files[0],
+      imagePreview: URL.createObjectURL(event.target.files[0]),
     });
   }
 
@@ -63,7 +66,7 @@ class App extends React.Component {
             <button type="submit">Upload</button>
           </label>
         </form>
-        <img crossOrigin="anonymous" src='http://localhost:1234/sightings/5dd08f378974a4581a79cca6' width="450px" height="375px" className="analyze" ref={this.imageRef} />
+        <img crossOrigin="anonymous" src={this.state.imagePreview} width="450px" height="375px" className="analyze" ref={this.imageRef} />
         <div>
           <button onClick={this.imgAnalyze}>Analyze</button>
         </div>
