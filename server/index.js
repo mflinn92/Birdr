@@ -45,17 +45,18 @@ app.get('/sightings/:id', async (req, res) => {
   }
 });
 app.post('/sightings', upload.single('sightingPhoto'), async (req, res) => {
-  const { file } = req;
+  const { file, body } = req;
+  console.log(body);
   let imgData = fs.readFileSync(file.path,);
   imgData = imgData.toString('base64');
   let imgBuffer = new Buffer(imgData, 'base64');
   let contentType = file.mimetype;
   // const { sighting } = req.body;
   let sighting = {
-		userFirstName: "Mike",
-		userLastName: "Flinn",
-		location: "Boston",
-		species: "Bald Eagle",
+		userFirstName: body.userFirstName,
+		userLastName: body.userLastName,
+		location: body.location,
+		species: body.species,
 		userID: 45
 	};
   sighting.img = {
