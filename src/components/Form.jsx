@@ -14,7 +14,6 @@ class Form extends React.Component {
       species: '',
       imagePreview: null,
       modelPredictions: [],
-      analysisImgId:'',
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onFileChange = this.onFileChange.bind(this);
@@ -35,10 +34,10 @@ class Form extends React.Component {
         'content-type': 'multipart/form-data'
       }
     };
-    console.log(formData);
+
     axios.post('/sightings', formData, config)
       .then((response) => {
-        console.log(response);
+        this.props.addSighting(response.data);
       }).catch((err) =>{
         console.log(err);
       });
@@ -75,14 +74,16 @@ class Form extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="sightingForm">
         <form onSubmit={this.onFormSubmit} encType="multipart/form-data">
           <label>
             Photo Upload
-            <input type="file" name="sightingPhoto" onChange={this.onFileChange} />
+            <input type="file"
+              name="sightingPhoto"
+              onChange={this.onFileChange}
+            />
 
           </label>
-
             {this.state.imagePreview && (
             <div className="imagePreview">
               <img crossOrigin="anonymous"
@@ -99,22 +100,38 @@ class Form extends React.Component {
           <div className="sightingInfo">
             <label>
               First Name:
-              <input type="text" value={this.state.firstName} onChange={this.onTextChange} name="userFirstName"/>
+              <input type="text"
+                value={this.state.firstName}
+                onChange={this.onTextChange}
+                name="userFirstName"
+              />
             </label>
             <br></br>
             <label>
               Last Name:
-              <input type="text" value={this.state.firstName} onChange={this.onTextChange} name="userLastName"/>
+              <input type="text"
+                value={this.state.firstName}
+                onChange={this.onTextChange}
+                name="userLastName"
+              />
             </label>
             <br/>
             <label>
               Location:
-              <input type="text" value={this.state.firstName} onChange={this.onTextChange} name="location"/>
+              <input type="text"
+                value={this.state.firstName}
+                onChange={this.onTextChange}
+                name="location"
+              />
             </label>
             <br/>
             <label>
               Species:
-              <input type="text" value={this.state.firstName} onChange={this.onTextChange} name="species"/>
+              <input type="text"
+                value={this.state.firstName}
+                onChange={this.onTextChange}
+                name="species"
+              />
             </label>
           </div>
           <div>

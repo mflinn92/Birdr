@@ -65,8 +65,7 @@ app.post('/sightings', upload.single('sightingPhoto'), async (req, res) => {
   }
   try {
     let response = await db.addSighting(sighting);
-    console.log(response);
-    res.send('sighting saved!');
+    res.json(response);
   } catch(err) {
     console.log(err);
     res.status(404).send('Error saving sighting');
