@@ -32,6 +32,16 @@ class sightingModel {
       throw err;
     }
   }
+
+  async deleteSighting(id) {
+    try {
+      await this.model.deleteOne({_id: id});
+    } catch(err) {
+      console.log(err);
+      throw err;
+    }
+
+  }
 }
 
 module.exports = new sightingModel();

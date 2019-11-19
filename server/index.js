@@ -72,6 +72,16 @@ app.post('/sightings', upload.single('sightingPhoto'), async (req, res) => {
   }
 });
 
+app.delete('/sightings', async (req, res) => {
+  const { id } = req.body;
+  try {
+    await db.deleteSighting(id);
+    res.send('sighting deleted');
+  } catch (err) {
+    res.status(400).send('Error deleting sighting');
+  }
+});
+
 app.listen(PORT, () => {
   console.log('listening at port ' + PORT);
 });

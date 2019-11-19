@@ -47,6 +47,9 @@ class App extends React.Component {
         });
       }
     });
+    axios.delete('/sightings', {data: {id: sightingId}})
+      .then(res => console.log('sighting deleted'))
+      .catch(res => console.log('error deleting sighting'));
   }
 
   render() {
