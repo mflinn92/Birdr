@@ -62,6 +62,7 @@ class Form extends React.Component {
     this.setState({
       file: event.target.files[0],
       imagePreview: URL.createObjectURL(event.target.files[0]),
+      analyzing: 0,
     });
   }
 
