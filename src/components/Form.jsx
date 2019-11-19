@@ -46,7 +46,7 @@ class Form extends React.Component {
       });
     this.setState({
       file: null,
-      imagePreview: null
+      imagePreview: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/About_to_Launch_%2826075320352%29.jpg'
     });
     event.target.reset();
   }
