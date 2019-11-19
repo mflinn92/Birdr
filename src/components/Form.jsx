@@ -15,11 +15,13 @@ class Form extends React.Component {
       species: '',
       imagePreview: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/About_to_Launch_%2826075320352%29.jpg',
       modelPredictions: [],
+      analyzing: 0,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onFileChange = this.onFileChange.bind(this);
     this.imgAnalyze = this.imgAnalyze.bind(this);
     this.onTextChange = this.onTextChange.bind(this);
+    this.analysisStatus = this.analysisStatus.bind(this);
   }
 
   onFormSubmit(event) {
@@ -65,17 +67,40 @@ class Form extends React.Component {
 
   imgAnalyze(event) {
     event.preventDefault();
+    this.setState({
+      analyzing: 1
+    });
     const { current } = this.imageRef;
     mobilenet.load()
       .then((model) => {
         return model.classify(current);
       })
       .then((prediction) => {
-        this.setState({modelPredictions: prediction});
+        this.setState({
+          modelPredictions: prediction,
+          analyzing: 2,
+        });
       })
       .catch((err) => {
         console.log(err);
       })
+  }
+
+  analysisStatus() {
+    switch (this.state.analyzing) {
+      case 1:
+        return (
+          <div className="analysis">
+            <h5>Birdr is analyzing your photo...</h5>
+          </div>
+        );
+      case 2:
+        return (
+          <Analysis modelPredictions={this.state.modelPredictions} />
+        )
+      default:
+        return (<div></div>);
+    }
   }
 
   render() {
@@ -104,8 +129,7 @@ class Form extends React.Component {
               <div className="analyze">
                 <button onClick={this.imgAnalyze}>Analyze</button>
                 <div>
-                  {  this.state.modelPredictions[0] &&
-                    <Analysis modelPredictions={this.state.modelPredictions} />}
+                  {this.analysisStatus()}
                 </div>
               </div>
             </div>

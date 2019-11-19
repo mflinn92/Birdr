@@ -44,6 +44,7 @@ app.get('/sightings/:id', async (req, res) => {
     res.status(404).send(err);
   }
 });
+
 app.post('/sightings', upload.single('sightingPhoto'), async (req, res) => {
   const { file, body } = req;
   console.log(body);
