@@ -35,7 +35,7 @@ class Sighting extends React.Component {
           <img src={`/sightings/${this.state._id}`} width="450px" height="375px" className="sightingImage" />
         </div>
         <div>
-          <button onClick={() => this.props.deleteSighting(this.state._id)}>Delete</button>
+          {this.state.userLastName === 'Flinn' &&<button onClick={() => this.props.deleteSighting(this.state._id)}>Delete</button>}
         </div>
       </div>
     )
