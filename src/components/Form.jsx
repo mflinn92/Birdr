@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Analysis from './analysis.jsx';
 
 class Form extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class Form extends React.Component {
       userLastName: '',
       location: '',
       species: '',
-      imagePreview: null,
+      imagePreview: 'https://upload.wikimedia.org/wikipedia/commons/1/1a/About_to_Launch_%2826075320352%29.jpg',
       modelPredictions: [],
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -41,6 +42,11 @@ class Form extends React.Component {
       }).catch((err) =>{
         console.log(err);
       });
+    this.setState({
+      file: null,
+      imagePreview: null
+    });
+    event.target.reset();
   }
 
   onTextChange(event) {
@@ -75,9 +81,11 @@ class Form extends React.Component {
   render() {
     return (
       <div className="sightingForm">
+        <h2>Add a Sighting</h2>
+        <hr className="border"></hr>
         <form onSubmit={this.onFormSubmit} encType="multipart/form-data">
-          <label>
-            Photo Upload
+          <label className="photoUpload">
+            Upload Photo
             <input type="file"
               name="sightingPhoto"
               onChange={this.onFileChange}
@@ -91,12 +99,18 @@ class Form extends React.Component {
                 width="450px" height="375px"
                 className="analyze"
                 ref={this.imageRef}
+                alt=''
               />
               <div className="analyze">
                 <button onClick={this.imgAnalyze}>Analyze</button>
+                <div>
+                  {  this.state.modelPredictions[0] &&
+                    <Analysis modelPredictions={this.state.modelPredictions} />}
+                </div>
               </div>
             </div>
             )}
+          <hr className="border"></hr>
           <div className="sightingInfo">
             <label>
               First Name:
@@ -135,7 +149,7 @@ class Form extends React.Component {
             </label>
           </div>
           <div>
-            <button type="submit">Upload</button>
+            <button type="submit">Save</button>
           </div>
         </form>
       </div>

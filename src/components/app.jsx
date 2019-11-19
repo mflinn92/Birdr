@@ -39,8 +39,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <Form addSighting={this.addSighting} />
         <RecentSightings recentSightings={this.state.recentSightings} />
+        <Form addSighting={this.addSighting} />
       </div>
 
     )

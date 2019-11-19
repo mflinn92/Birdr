@@ -12,20 +12,27 @@ class Sighting extends React.Component {
   render() {
     return (
       <div className="sighting">
-        <div>
-          <img src={`/sightings/${this.state._id}`} width="450px" height="375px" className="sightingImage" />
+        <div className="sightingInfo">
+          <div className="col1" >
+            <h3>{this.state.userFirstName} {this.state.userLastName}</h3>
+            <h4>
+              Species: <span>{this.state.species}: </span>
+            </h4>
+          </div>
+          <div className="col2">
+            <h4>
+            Seen in: <span>{this.state.location}</span>
+            </h4>
+            <h4>
+              Seen on: <span>{this.state.formattedDate[1]}-{this.state.formattedDate[2]}-{this.state.formattedDate[0]}</span>
+            </h4>
+          </div>
+        </div>
+        <div class="borderContainer">
+          <hr className="border2s"></hr>
         </div>
         <div>
-          <h3>{this.state.userFirstName} {this.state.userLastName}</h3>
-          <h4>
-            Species: <span>{this.state.species}: </span>
-          </h4>
-          <h4>
-            Seen at: <span>{this.state.location}</span>
-          </h4>
-          <h4>
-            Seen on: <span>{this.state.formattedDate[1]}-{this.state.formattedDate[2]}-{this.state.formattedDate[0]}</span>
-          </h4>
+          <img src={`/sightings/${this.state._id}`} width="450px" height="375px" className="sightingImage" />
         </div>
       </div>
     )
