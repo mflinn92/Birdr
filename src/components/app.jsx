@@ -13,6 +13,7 @@ class App extends React.Component {
     };
     this.getRecentSightings = this.getRecentSightings.bind(this);
     this.addSighting = this.addSighting.bind(this);
+    this.deleteSighting = this.deleteSighting.bind(this);
   }
 
   componentDidMount() {
@@ -36,10 +37,22 @@ class App extends React.Component {
       });
   }
 
+  deleteSighting(sightingId) {
+    this.state.recentSightings.forEach((sighting, index) => {
+      if (sighting._id === sightingId) {
+        let newSightings = this.state.recentSightings.slice();
+        newSightings.splice(index, 1);
+        this.setState({
+          recentSightings: newSightings
+        });
+      }
+    });
+  }
+
   render() {
     return (
       <div className="container">
-        <RecentSightings recentSightings={this.state.recentSightings} />
+        <RecentSightings recentSightings={this.state.recentSightings} deleteSighting={this.deleteSighting} />
         <Form addSighting={this.addSighting} />
       </div>
 

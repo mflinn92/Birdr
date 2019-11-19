@@ -28,11 +28,14 @@ class Sighting extends React.Component {
             </h4>
           </div>
         </div>
-        <div class="borderContainer">
+        <div className="borderContainer">
           <hr className="border2s"></hr>
         </div>
         <div>
           <img src={`/sightings/${this.state._id}`} width="450px" height="375px" className="sightingImage" />
+        </div>
+        <div>
+          <button onClick={() => this.props.deleteSighting(this.state._id)}>Delete</button>
         </div>
       </div>
     )
